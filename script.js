@@ -1,17 +1,30 @@
 let numAdicionado = [];
 
 function add(){
-    let numero = document.querySelector('#numero').value;
+    let numero = document.querySelector('#numero');
     let numAd = document.querySelector('#numAd');
     let item = document.createElement('option');
 
-    if(Number(numero) < 1 || Number(numero) > 100 || numero.length == 0 ){
+    function numRepetido(){
+        for(let i = 0; i < numAdicionado.length; i++){
+            if(Number(numero.value) == Number(numAdicionado[i])){
+                return false
+            }
+        }
+    }
+    if(numRepetido() == false){
+        alert('Número já cadastrado')
+    }
+    else if(Number(numero.value) < 1 || Number(numero.value) > 100 || numero.length == 0 ){
         alert('Valor inválido')
     }else{
-        item.text = `Valor ${numero} adicionado`;
+        item.text = `Valor ${numero.value} adicionado`;
         numAd.appendChild(item);
-        numAdicionado.push(numero)
+        numAdicionado.push(numero.value);
     }
+    numero.value = ''
+    numero.focus()
+    document.querySelector('#resultado').style.display = 'none';
 }
 
 function enviar(){
@@ -34,6 +47,7 @@ function enviar(){
         soma.innerHTML = `Somando todos os valores, temos ${sum()}`;
         media.innerHTML = `A média dos valores digitados é ${sum()/quantItem}`;
     }
+    document.querySelector('#resultado').style.display = 'block'
 }
 
 function sum(){
