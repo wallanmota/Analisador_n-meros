@@ -22,8 +22,7 @@ function add(){
         numAd.appendChild(item);
         numAdicionado.push(numero.value);
     }
-    numero.value = ''
-    numero.focus()
+    
     document.querySelector('#resultado').style.display = 'none';
 }
 
