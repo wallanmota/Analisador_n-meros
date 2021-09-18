@@ -1,59 +1,64 @@
-let numAdicionado = [];
+let num = document.querySelector('#numero');
+let numAd = document.querySelector('#numAd');
+let resultado = document.querySelector('#resultado');
+let valores= [];
+
+function isNum(n=0){
+    if(Number(n) >= 1 && Number(n) <=100){
+        return true
+    }else{
+        return false
+    }
+}
+function inLista(n, l){
+    if(l.indexOf(Number(n)) != -1){
+        return true
+    }else{
+        return false
+    }
+}
 
 function add(){
-    let numero = document.querySelector('#numero');
-    let numAd = document.querySelector('#numAd');
-    let item = document.createElement('option');
-
-    function numRepetido(){
-        for(let i = 0; i < numAdicionado.length; i++){
-            if(Number(numero.value) == Number(numAdicionado[i])){
-                return false
-            }
-        }
-    }
-    if(numRepetido() == false){
-        alert('Número já cadastrado')
-    }
-    else if(Number(numero.value) < 1 || Number(numero.value) > 100 || numero.length == 0 ){
-        alert('Valor inválido')
-    }else{
-        item.text = `Valor ${numero.value} adicionado`;
+    if(isNum(num.value) && !inLista(num.value, valores)){
+        valores.push(Number(num.value));
+        let item = document.createElement('option');
+        item.text = `Valor ${num.value} adicionado`;
         numAd.appendChild(item);
-        numAdicionado.push(numero.value);
+        resultado.innerHTML = '';
+    }else{
+        alert('Valor inválido ou já encontrado na lista')
     }
-    
-    document.querySelector('#resultado').style.display = 'none';
-}
+    num.value = '';
+    num.focus();
+};
 
 function enviar(){
-    var quantItem = numAdicionado.length;
-    numAdicionado.sort((a,b)=>{return a-b});
-    
-    if(quantItem == 0){
-        alert(`Adicione um valor antes de finalizar`)
+    if(valores.length == 0){
+        alert(`Adicione velores antes de finalizar`)
+    }else{
+        let total = valores.length
+        let maior = valores[0]
+        let menor = valores[0]
+        let soma = 0
+        let media = 0
+
+        for(let pos in valores){
+            soma += valores[pos];
+            if(valores[pos] > maior){
+                maior = valores[pos]
+            }    
+            if(valores[pos] < menor){
+                menor = valores[pos]
+            }    
+        
+        }
+        media = soma / total;
+
+        resultado.innerHTML = '';
+        resultado.innerHTML += `<p>Ao todo, temos ${total} números cadastrados</p>`
+        resultado.innerHTML += `<p>O maior valor informado foi ${maior}</p>`
+        resultado.innerHTML += `<p>O menor valor informado foi ${menor}</p>`
+        resultado.innerHTML += `<p>Somando todos os valores temos ${soma}</p>`
+        resultado.innerHTML += `<p>A média dos valores informados é ${media}</p>`
     }
-    else{
-        let quantidade = document.querySelector('#quantidade')
-        let maior = document.querySelector('#maior')
-        let menor = document.querySelector('#menor')
-        let soma = document.querySelector('#soma')
-        let media = document.querySelector('#media')
-
-        quantidade.innerHTML = `Ao todo, temos ${quantItem} números cadastrados.`;
-        maior.innerHTML = `O maior valor informado foi ${numAdicionado[quantItem -1]}`;
-        menor.innerHTML = `O menor valor informado foi ${numAdicionado[0]}`;
-        soma.innerHTML = `Somando todos os valores, temos ${sum()}`;
-        media.innerHTML = `A média dos valores digitados é ${sum()/quantItem}`;
-    }
-    document.querySelector('#resultado').style.display = 'block'
-}
-
-function sum(){
-    let soma = 0
-    for(let i = 0; i < numAdicionado.length; i++){
-        soma += Number(numAdicionado[i])
-    }return soma
-}
-
-
+};
