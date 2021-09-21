@@ -17,6 +17,6 @@ Resultado
 - Maior valor informado;
 - Menor valor informado;
 - A soma dos valores;
-- A média dos valores;
+- A média dos valores; 
 
 [**Clique Aqui**](https://wallanmota.github.io/Analisador_numeros/) para ver o projeto!
